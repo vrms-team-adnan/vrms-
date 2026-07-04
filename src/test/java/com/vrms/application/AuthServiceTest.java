@@ -24,15 +24,17 @@ class AuthServiceTest {
 
     @Test
     void loginSucceed() {
-        boolean result = authService.login("adnan", "1234");
-
-        assertTrue(result, "Login should succeed with correct username and password");
+        extractMethodLoginSuccessfuly();
     }
+
+	private void extractMethodLoginSuccessfuly() {
+		boolean result = authService.login("adnan", "1234");
+        assertTrue(result, "Login should succeed with correct username and password");
+	}
 
     @Test
     void loginhWrongPassword() {
         boolean result = authService.login("adnan", "wrong-password");
-
         assertFalse(result, "Login should fail when the password is incorrect");
     }
 
@@ -40,6 +42,30 @@ class AuthServiceTest {
     void loginhWronguserName(){
         boolean result=authService.login("wrong_name","1234");
         assertFalse(result,"Login should fail when the user_name is incorrect");
+    }
+    @Test
+    void loginThenLogout() {
+    	extractMethodLoginSuccessfuly();
+    	logoutSuccessfuly();
+    }
+
+	private void logoutSuccessfuly() {
+		authService.logout();
+    	boolean stayLoginOrNot =authService.isLoggedIn();
+    	assertFalse(stayLoginOrNot);
+	}
+    @Test
+    void loginAfterLogout() {
+    	extractMethodLoginSuccessfuly();
+    	logoutSuccessfuly();
+    	extractMethodLoginSuccessfuly();
+    }
+    @Test
+    void loginWrongAfterLogout() {
+    	extractMethodLoginSuccessfuly();
+    	logoutSuccessfuly();
+    	boolean result2 = authService.login("adnan", "wrong-password");
+        assertFalse(result2, "Login should fail when the password is incorrect");
     }
 }
     
