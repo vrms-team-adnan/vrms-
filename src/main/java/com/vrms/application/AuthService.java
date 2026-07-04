@@ -11,8 +11,6 @@ public class AuthService {
     public AuthService(ManagerRepository managerRepository){
         this.managerRepository=managerRepository;
     }
-    ManagerRepository repo = new InMemoryManagerRepository();
-    AuthService authService = new AuthService(repo);
 
     public boolean login(String username, String password) {
     Optional<Manager> manager = managerRepository.findByUsername(username);
