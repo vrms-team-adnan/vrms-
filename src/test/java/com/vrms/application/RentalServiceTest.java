@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+// Test 1 and 2 for US2.1 Test 3 for US2.2
 
 public class RentalServiceTest {
     
@@ -33,5 +34,16 @@ private RentalService rentalService;
     rentalService.rentVehicle("someId", vehicle);
 });
  }
+ @Test
+ void rentDoubleBooking(){
+    Vehicle vehicle=new Vehicle("2", "BMW", VehicleStatus.AVAILABLE);
+rentalService.rentVehicle("1", vehicle);
+    assertThrows(RentalException.class, () -> {
+  rentalService.rentVehicle("1", vehicle);
+});
+    
+    
+ }
+
 
 }
