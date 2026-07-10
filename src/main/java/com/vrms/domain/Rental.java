@@ -8,7 +8,8 @@ public class Rental{
 
     private final String id;
     private final Vehicle vehicle;
-    
+    private final LocalDate startD;
+    private final LocalDate endD;	
     public Rental(String id,Vehicle vehicle, LocalDate startD2, LocalDate endD2){
         this.id=id;
         this.vehicle=vehicle;
@@ -21,7 +22,11 @@ public class Rental{
     public Vehicle getVehicle(){
         return vehicle;
     }
-    private LocalDate startD;
-    private LocalDate endD;	
-    
+
+    public LocalDate getStartD(){
+        return startD;
+    }
+    public LocalDate getEndD(){
+        return endD;
+    }
 }
