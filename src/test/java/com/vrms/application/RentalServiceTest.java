@@ -69,4 +69,12 @@ rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2
 }); 
     assertEquals(VehicleStatus.AVAILABLE, vehicle.getStatus());
  }
+ 
+ @Test
+ void rentWithEndDate(){
+   Vehicle vehicle=new Vehicle("9", "GOLF", VehicleStatus.AVAILABLE);
+   assertThrows(RentalException.class,()->{
+  rentalService.rentVehicle("7", vehicle, LocalDate.now(), LocalDate.now().plusDays(40));
+   });
+ }
 }
