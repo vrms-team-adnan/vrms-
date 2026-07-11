@@ -15,4 +15,10 @@ public interface RentalRepository {
      * @param   rental   the rental record to be saved
      */
     void save(Rental rental);
+    /**
+     * find the rental by rentId 
+     * @param rentId
+     * @return the rental, or null if it is not found
+     */
+    Rental findById(String rentId);
 }

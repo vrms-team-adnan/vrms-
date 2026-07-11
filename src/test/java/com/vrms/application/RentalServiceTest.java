@@ -1,5 +1,6 @@
 package com.vrms.application;
-
+import com.vrms.domain.Rental;
+import com.vrms.domain.RentelStatus;
 import com.vrms.common.RentalException;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
@@ -18,9 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RentalServiceTest {
     
 private RentalService rentalService;
+private RentalRepository rentalRepository;
  @BeforeEach
  void setUp(){
-     RentalRepository rentalRepository = new InMemoryRentalRepository();
+     rentalRepository = new InMemoryRentalRepository();
         rentalService = new RentalService(rentalRepository);
  }
  @Test
@@ -76,5 +78,32 @@ rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2
    assertThrows(RentalException.class,()->{
   rentalService.rentVehicle("7", vehicle, LocalDate.now(), LocalDate.now().plusDays(40));
    });
+ }
+ 
+ //4.1
+ @Test
+ void returnVehicle() {
+	 Vehicle vehicle=new Vehicle("5","Skuda",VehicleStatus.AVAILABLE);
+	 rentalService.rentVehicle("ren-50",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10));
+	 rentalService.returnV("ren-50");
+	 Rental rental=rentalRepository.findById("ren-50");
+	 assertEquals(VehicleStatus.AVAILABLE,vehicle.getStatus());
+	 assertEquals(RentelStatus.CLOSED,rental.getStatus());
+ }
+ 
+ @Test
+ void returnVehicleIsClose() {
+	 Vehicle vehicle=new Vehicle("5","Skuda",VehicleStatus.AVAILABLE);
+	 rentalService.rentVehicle("ren-50",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10));
+	 rentalService.returnV("ren-50");
+	 assertThrows(RentalException.class,()->{
+		 rentalService.returnV("ren-50"); 
+	 });
+ }
+ @Test
+ void returnVehicleNotFound() {
+	 assertThrows(RentalException.class,()->{
+		 rentalService.returnV("ren-50"); 
+	 });
  }
 }

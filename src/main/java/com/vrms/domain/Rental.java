@@ -12,6 +12,7 @@ public class Rental {
     private final Vehicle vehicle;
     private final LocalDate startD;
     private final LocalDate endD;
+    private RentelStatus status;
 
     /**
      * Creates a new rental record.
@@ -26,6 +27,7 @@ public class Rental {
         this.vehicle = vehicle;
         this.startD = startD2;
         this.endD = endD2;
+        this.status= RentelStatus.RUNNING;
     }
 
     /**
@@ -62,5 +64,18 @@ public class Rental {
      */
     public LocalDate getEndD() {
         return endD;
+    }
+    /**
+     * Changes the rental status to closed
+     */
+    public void closed() {
+    	this.status= RentelStatus.CLOSED;
+    }
+    /**
+     * Get rental status
+     * @return the rental status
+     */
+    public RentelStatus getStatus() {
+    	return status;
     }
 }
