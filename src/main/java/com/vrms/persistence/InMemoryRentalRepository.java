@@ -15,6 +15,7 @@ public class InMemoryRentalRepository implements RentalRepository {
 
     /**
      * Adds a new rental to the list.
+     * @param   rental   the rental to save
      */
     @Override
     public void save(Rental rental) {
