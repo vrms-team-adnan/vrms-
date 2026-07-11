@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 import com.vrms.common.RentalException;
 import com.vrms.domain.Rental;
+import com.vrms.domain.RentelStatus;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
 import com.vrms.persistence.RentalRepository;
@@ -59,5 +60,23 @@ public class RentalService {
         rentalRepository.save(rental);
 
         vehicle.setStatus(VehicleStatus.RENTED);
+    }
+    /**
+     * Return the car (Make it close)
+     * change the  Vehicle Status to AVAILABLE
+     * @param rentId the rental id
+     * @throws RentalException if the rental is not found or is already closed
+     */
+    public void returnV(String rentId) {
+    	Rental rental=rentalRepository.findById(rentId);
+    	if(rental==null) {
+    		throw new RentalException("Cannot return vehicle: rental not found");
+    	}
+    	if(rental.getStatus()==RentelStatus.CLOSED)
+    	{
+    		throw new RentalException("Rental is already closed");
+    	}
+    	rental.closed();
+    	rental.getVehicle().setStatus(VehicleStatus.AVAILABLE);
     }
 }
