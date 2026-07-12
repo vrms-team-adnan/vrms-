@@ -9,12 +9,14 @@ import com.vrms.domain.RentelStatus;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
 import com.vrms.persistence.RentalRepository;
-
+import com.vrms.application.strategy.carRentalStrategy;
+import com.vrms.application.strategy.RentalPricingStrategy;
 /**
  * Handles the logic for renting a vehicle.
  */
 public class RentalService {
     private final RentalRepository rentalRepository;
+    private final RentalPricingStrategy priciStategy;
 
     /**
      * Creates a new RentalService.
@@ -22,10 +24,21 @@ public class RentalService {
      * @param   rentalRepository   the repository used to save rentals
      */
     public RentalService(RentalRepository rentalRepository) {
-        this.rentalRepository = rentalRepository;
+        this(rentalRepository,new carRentalStrategy(50, 20));
     }
-
     /**
+     * Creates a rental service with a pricing strategy
+     * @param rentalRepository2 the rental repository
+     * @param priciStategy the pricing strategy
+     */
+
+    public RentalService(RentalRepository rentalRepository2, RentalPricingStrategy priciStategy) {
+    	this.rentalRepository = rentalRepository2;
+    	this.priciStategy = priciStategy;
+	}
+
+
+	/**
      * Rents a vehicle for the given period. Validates the dates and the
      * vehicle's availability, then creates a rental record and marks the
      * vehicle as rented.
@@ -78,5 +91,57 @@ public class RentalService {
     	}
     	rental.closed();
     	rental.getVehicle().setStatus(VehicleStatus.AVAILABLE);
+    }
+    
+    /**
+     * Calculates the rental cost
+     * @param rentId the rental id
+     * @return the rental cost
+     * @throws RentalException if the rental is not found
+     */
+    public double costrental(String rentId) {
+    	Rental rental=rentalRepository.findById(rentId);
+    	if(rental==null) {
+    		throw new RentalException("Cannot return vehicle: rental not found");
+    	}
+    	return priciStategy.calcRental(rental);
+    	
+    }
+    
+    /**
+     * Calculates the late return fee
+     * @param rentId the rental id
+     * @param returnD the real return date
+     * @return the late fee
+     * @throws RentalException if the rental is not found or the date is null
+     */
+    public double costlate(String rentId,LocalDate returnD) {
+    	Rental rental=rentalRepository.findById(rentId);
+    	if(rental==null) {
+    		throw new RentalException("Cannot return vehicle: rental not found");
+    	}
+    	if (returnD == null) {
+            throw new RentalException("Cannot calculate late penalty: return date is null");
+        }
+    	return priciStategy.calcLateP(rental, returnD);
+    }
+    
+    /**
+     * Calculates the rental cost and late fee together
+     * @param rentId the rental id
+     * @param returnD the real return date
+     * @return the total cost
+     * @throws RentalException if the rental is not found or the date is null
+     */
+    public double totalcost(String rentId,LocalDate returnD)
+    {
+    	Rental rental=rentalRepository.findById(rentId);
+    	if(rental==null) {
+    		throw new RentalException("Cannot return vehicle: rental not found");
+    	}
+    	if (returnD == null) {
+            throw new RentalException("Cannot calculate total cost: return date is null");
+        }
+    	return priciStategy.calcRental(rental)+priciStategy.calcLateP(rental, returnD);
     }
 }
