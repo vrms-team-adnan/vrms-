@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
-
+import com.vrms.application.strategy.carRentalStrategy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 // Test 1 and 2 for US2.1 Test 3 for US2.2
 
@@ -23,7 +23,7 @@ private RentalRepository rentalRepository;
  @BeforeEach
  void setUp(){
      rentalRepository = new InMemoryRentalRepository();
-        rentalService = new RentalService(rentalRepository);
+     rentalService = new RentalService(rentalRepository, new carRentalStrategy(50, 20));
  }
  @Test
  void rentVehicleSucceed(){
@@ -105,5 +105,39 @@ rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2
 	 assertThrows(RentalException.class,()->{
 		 rentalService.returnV("ren-50"); 
 	 });
+ }
+ @Test
+ void calcRentalCost() {
+     Vehicle vehicle = new Vehicle("20", "BMW", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle("ren-60",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10));
+     double cost=rentalService.costrental("ren-60");
+     assertEquals(450, cost);
+ }
+ @Test
+ void calcRentalCostNotFound() {
+     assertThrows(RentalException.class, () -> {
+         rentalService.costrental("not-found");
+     });
+ }
+ @Test
+ void calcLateP() {
+     Vehicle vehicle = new Vehicle("21", "Toyota", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle("rent-21",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10));
+     double penalty = rentalService.costlate("rent-21",LocalDate.of(2026, 10, 12));
+     assertEquals(40, penalty);
+ }
+ @Test
+ void calcLatePOnTime() {
+     Vehicle vehicle = new Vehicle("22", "Golf", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle("rent-22",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10) );
+     double penalty = rentalService.costlate( "rent-22", LocalDate.of(2026, 10, 10));
+     assertEquals(0, penalty);
+ }
+ @Test
+ void calculateTotalCost() {
+     Vehicle vehicle = new Vehicle("24", "Mercedes", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle( "ren-24",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10));
+     double total = rentalService.totalcost("ren-24",LocalDate.of(2026, 10, 12));
+     assertEquals(490, total);
  }
 }
