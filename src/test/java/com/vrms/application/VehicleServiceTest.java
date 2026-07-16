@@ -1,4 +1,5 @@
 package com.vrms.application;
+import com.vrms.domain.Car;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
 import com.vrms.persistence.InMemoryVehicleRepository;
@@ -12,9 +13,9 @@ class VehicleServiceTest {
 	@BeforeEach
 	void setUp() {
 		VehicleRepository vehicleRepository=new InMemoryVehicleRepository();
-		((InMemoryVehicleRepository) vehicleRepository).save(new Vehicle("1","Kya",VehicleStatus.AVAILABLE));
-		((InMemoryVehicleRepository) vehicleRepository).save(new Vehicle("2","merceses",VehicleStatus.AVAILABLE));
-		((InMemoryVehicleRepository) vehicleRepository).save(new Vehicle("3","BMW",VehicleStatus.RENTED));
+		((InMemoryVehicleRepository) vehicleRepository).save(new Car("1","Kya",VehicleStatus.AVAILABLE));
+		((InMemoryVehicleRepository) vehicleRepository).save(new Car("2","merceses",VehicleStatus.AVAILABLE));
+		((InMemoryVehicleRepository) vehicleRepository).save(new Car("3","BMW",VehicleStatus.RENTED));
 		
 		vehicleService = new VehicleService(vehicleRepository);
 	}
