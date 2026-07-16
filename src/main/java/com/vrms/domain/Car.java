@@ -20,7 +20,7 @@ public class Car extends Vehicle {
      * {@inheritDoc}
      */
     @Override
-    public void validateForRental(int customerAge) {
+    public void validateForRental(Customer customer) {
 
     }
 }
