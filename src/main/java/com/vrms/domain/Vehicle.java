@@ -75,12 +75,12 @@ public abstract class Vehicle {
         return status == VehicleStatus.RENTED;
     }
 
-    /**
+/**
  * Validates whether this vehicle can be rented, based on type-specific
  * rules (e.g. age restrictions, license checks, battery checks).
  *
- * @param   customerAge   the customer's age
+ * @param   customer   the customer requesting the rental
  */
 
-    public abstract void validateForRental(int customerAge);
+    public abstract void validateForRental(Customer customer);
 }
