@@ -23,8 +23,8 @@ public class Motorcycle extends Vehicle {
      * {@inheritDoc}
      */
     @Override
-    public void validateForRental(int customerAge) {
-        if(customerAge<18)throw new RentalException("Motorcycle rental requires the customer to be at least 18 years old");
+    public void validateForRental(Customer customer) {
+        if(customer.getAge()<18)throw new RentalException("Motorcycle rental requires the customer to be at least 18 years old");
 
     }
 }
