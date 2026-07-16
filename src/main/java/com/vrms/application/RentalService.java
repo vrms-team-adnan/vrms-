@@ -11,6 +11,7 @@ import com.vrms.domain.VehicleStatus;
 import com.vrms.persistence.RentalRepository;
 import com.vrms.application.strategy.carRentalStrategy;
 import com.vrms.application.strategy.RentalPricingStrategy;
+import com.vrms.domain.Customer;
 /**
  * Handles the logic for renting a vehicle.
  */
@@ -51,7 +52,7 @@ public class RentalService {
      *          after the end date, the duration exceeds 30 days, or the
      *          vehicle is not available
      */
-    public void rentVehicle(String rentId, Vehicle vehicle, LocalDate startD, LocalDate endD) {
+    public void rentVehicle(String rentId, Vehicle vehicle, LocalDate startD, LocalDate endD,Customer customer) {
         if (startD == null || endD == null) {
             throw new RentalException("Cannot rent vehicle: Date is null");
         }
@@ -68,7 +69,7 @@ public class RentalService {
         if (!vehicle.isAvailable()) {
             throw new RentalException("Cannot rent vehicle: vehicle is not available");
         }
-
+       vehicle.validateForRental(customer);
         Rental rental = new Rental(rentId, vehicle, startD, endD);
         rentalRepository.save(rental);
 
