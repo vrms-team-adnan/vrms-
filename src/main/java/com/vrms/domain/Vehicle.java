@@ -3,7 +3,7 @@ package com.vrms.domain;
 /**
  * Represents a vehicle available for rental.
  */
-public class Vehicle {
+public abstract class Vehicle {
     private String id;
     private String name;
     private VehicleStatus status;
@@ -74,4 +74,13 @@ public class Vehicle {
     public boolean isRented() {
         return status == VehicleStatus.RENTED;
     }
+
+    /**
+ * Validates whether this vehicle can be rented, based on type-specific
+ * rules (e.g. age restrictions, license checks, battery checks).
+ *
+ * @param   customerAge   the customer's age
+ */
+
+    public abstract void validateForRental(int customerAge);
 }
