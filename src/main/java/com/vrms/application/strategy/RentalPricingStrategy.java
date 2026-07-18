@@ -7,13 +7,13 @@ import com.vrms.domain.Rental;
 public interface RentalPricingStrategy {
 	/**
 	 * calculate the rental cost 
-	 * @param rental
+	 * @param rental the rental to calculate the cost for
 	 * @return the rental cost
 	 */
 	double calcRental(Rental rental);
 	/**
 	 * calculate late penalty 
-	 * @param rental
+	 * @param rental the rental to check
 	 * @param returnDate real return date
 	 * @return late penalty
 	 */

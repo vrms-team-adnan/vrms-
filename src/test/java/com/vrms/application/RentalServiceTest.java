@@ -1,4 +1,5 @@
 package com.vrms.application;
+import com.vrms.domain.Car;
 import com.vrms.domain.Rental;
 import com.vrms.domain.RentelStatus;
 import com.vrms.common.RentalException;
@@ -8,6 +9,7 @@ import com.vrms.persistence.InMemoryRentalRepository;
 import com.vrms.persistence.RentalRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.vrms.domain.Customer;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -20,71 +22,75 @@ public class RentalServiceTest {
     
 private RentalService rentalService;
 private RentalRepository rentalRepository;
+private Customer customer;
+
  @BeforeEach
  void setUp(){
      rentalRepository = new InMemoryRentalRepository();
      rentalService = new RentalService(rentalRepository, new carRentalStrategy(50, 20));
+     customer = new Customer("9", "Test Customer", 25, false);
  }
+ 
  @Test
  void rentVehicleSucceed(){
-    Vehicle vehicle=new Vehicle("2", "BMW", VehicleStatus.AVAILABLE);
-    rentalService.rentVehicle("3", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10) );
+    Vehicle vehicle=new Car("2", "BMW", VehicleStatus.AVAILABLE);
+    rentalService.rentVehicle("3", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10),customer);
     assertEquals(VehicleStatus.RENTED, vehicle.getStatus());
 
  }
  @Test
  void rentVehicleNotAvailable(){
-    Vehicle vehicle=new Vehicle("2", "BMW", VehicleStatus.RENTED);
+    Vehicle vehicle=new Car("2", "BMW", VehicleStatus.RENTED);
     assertThrows(RentalException.class, () -> {
-    rentalService.rentVehicle("someId", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10));
+    rentalService.rentVehicle("someId", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10),customer);
 });
  }
  @Test
  void rentDoubleBooking(){
-    Vehicle vehicle=new Vehicle("2", "BMW", VehicleStatus.AVAILABLE);
-rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10));
+    Vehicle vehicle=new Car("2", "BMW", VehicleStatus.AVAILABLE);
+rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10),customer);
     assertThrows(RentalException.class, () -> {
-  rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10));
+  rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2026, 10, 10),customer);
 }); 
  }
  @Test
  void rentWithNulls(){
-    Vehicle vehicle=new Vehicle("2", "BMW", VehicleStatus.AVAILABLE);
+    Vehicle vehicle=new Car("2", "BMW", VehicleStatus.AVAILABLE);
     assertThrows(RentalException.class, () -> {
-  rentalService.rentVehicle("1", vehicle,null ,LocalDate.of(2026, 10, 10));
+  rentalService.rentVehicle("1", vehicle,null ,LocalDate.of(2026, 10, 10),customer);
 }); 
     assertEquals(VehicleStatus.AVAILABLE, vehicle.getStatus());
  }
  @Test
  void rentWithNulle(){
-    Vehicle vehicle=new Vehicle("2", "BMW", VehicleStatus.AVAILABLE);
+    Vehicle vehicle=new Car("2", "BMW", VehicleStatus.AVAILABLE);
     assertThrows(RentalException.class, () -> {
-  rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 10),null);
+  rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 10),null,customer);
 }); 
     assertEquals(VehicleStatus.AVAILABLE, vehicle.getStatus());
  }
  @Test
  void rentWhithErrorDate(){
-    Vehicle vehicle=new Vehicle("2", "BMW", VehicleStatus.AVAILABLE);
+    Vehicle vehicle=new Car("2", "BMW", VehicleStatus.AVAILABLE);
     assertThrows(RentalException.class, () -> {
-  rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 10),LocalDate.of(2026, 10, 1));
+  rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 10),LocalDate.of(2026, 10, 1),customer);
 }); 
     assertEquals(VehicleStatus.AVAILABLE, vehicle.getStatus());
  }
  
  @Test
  void rentWithEndDate(){
-   Vehicle vehicle=new Vehicle("9", "GOLF", VehicleStatus.AVAILABLE);
+   Vehicle vehicle=new Car("9", "GOLF", VehicleStatus.AVAILABLE);
    assertThrows(RentalException.class,()->{
-  rentalService.rentVehicle("7", vehicle, LocalDate.now(), LocalDate.now().plusDays(40));
+  rentalService.rentVehicle("7", vehicle, LocalDate.now(), LocalDate.now().plusDays(40),customer);
    });
  }
  
  //4.1
  @Test
  void returnVehicle() {
-	 Vehicle vehicle=new Vehicle("5","Skuda",VehicleStatus.AVAILABLE);
-	 rentalService.rentVehicle("ren-50",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10));
+	 Vehicle vehicle=new Car("5","Skuda",VehicleStatus.AVAILABLE);
+	 rentalService.rentVehicle("ren-50",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10),customer);
 	 rentalService.returnV("ren-50");
 	 Rental rental=rentalRepository.findById("ren-50");
 	 assertEquals(VehicleStatus.AVAILABLE,vehicle.getStatus());
@@ -93,8 +99,8 @@ rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2
  
  @Test
  void returnVehicleIsClose() {
-	 Vehicle vehicle=new Vehicle("5","Skuda",VehicleStatus.AVAILABLE);
-	 rentalService.rentVehicle("ren-50",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10));
+	 Vehicle vehicle=new Car("5","Skuda",VehicleStatus.AVAILABLE);
+	 rentalService.rentVehicle("ren-50",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10),customer);
 	 rentalService.returnV("ren-50");
 	 assertThrows(RentalException.class,()->{
 		 rentalService.returnV("ren-50"); 
@@ -108,8 +114,8 @@ rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2
  }
  @Test
  void calcRentalCost() {
-     Vehicle vehicle = new Vehicle("20", "BMW", VehicleStatus.AVAILABLE);
-     rentalService.rentVehicle("ren-60",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10));
+     Vehicle vehicle = new Car("20", "BMW", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle("ren-60",vehicle,LocalDate.of(2026, 10,1),LocalDate.of(2026, 10,10),customer);
      double cost=rentalService.costrental("ren-60");
      assertEquals(450, cost);
  }
@@ -121,22 +127,22 @@ rentalService.rentVehicle("1", vehicle,LocalDate.of(2026, 10, 1) ,LocalDate.of(2
  }
  @Test
  void calcLateP() {
-     Vehicle vehicle = new Vehicle("21", "Toyota", VehicleStatus.AVAILABLE);
-     rentalService.rentVehicle("rent-21",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10));
+     Vehicle vehicle = new Car("21", "Toyota", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle("rent-21",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10),customer);
      double penalty = rentalService.costlate("rent-21",LocalDate.of(2026, 10, 12));
      assertEquals(40, penalty);
  }
  @Test
  void calcLatePOnTime() {
-     Vehicle vehicle = new Vehicle("22", "Golf", VehicleStatus.AVAILABLE);
-     rentalService.rentVehicle("rent-22",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10) );
+     Vehicle vehicle = new Car("22", "Golf", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle("rent-22",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10),customer );
      double penalty = rentalService.costlate( "rent-22", LocalDate.of(2026, 10, 10));
      assertEquals(0, penalty);
  }
  @Test
  void calculateTotalCost() {
-     Vehicle vehicle = new Vehicle("24", "Mercedes", VehicleStatus.AVAILABLE);
-     rentalService.rentVehicle( "ren-24",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10));
+     Vehicle vehicle = new Car("24", "Mercedes", VehicleStatus.AVAILABLE);
+     rentalService.rentVehicle( "ren-24",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10),customer);
      double total = rentalService.totalcost("ren-24",LocalDate.of(2026, 10, 12));
      assertEquals(490, total);
  }

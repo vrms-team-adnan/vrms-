@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.vrms.domain.Car;
 import com.vrms.domain.Rental;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
@@ -12,7 +14,7 @@ class CarRentalStrategyTest {
 	@BeforeEach
     void setUp() {
 		strategy=new carRentalStrategy(50,20);
-		Vehicle vehicle =new Vehicle("1","kya",VehicleStatus.RENTED);
+		Vehicle vehicle =new Car("1","kya",VehicleStatus.RENTED);
 		rental=new Rental("1ren",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10));
 	}
 

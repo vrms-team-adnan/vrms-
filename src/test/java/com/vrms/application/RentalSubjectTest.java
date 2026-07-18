@@ -1,4 +1,5 @@
 package com.vrms.application;
+import com.vrms.domain.Car;
 import com.vrms.domain.Rental;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
@@ -19,7 +20,7 @@ class RentalSubjectTest {
         subject.subscribe(mockObserver);
 
         
-        Vehicle vehicle = new Vehicle("1", "Toyota", VehicleStatus.RENTED);
+        Vehicle vehicle = new Car("1", "Toyota", VehicleStatus.RENTED);
         Rental rental = new Rental("100", vehicle, LocalDate.now(), LocalDate.now().plusDays(3));
         subject.notifyObservers(rental);
 
