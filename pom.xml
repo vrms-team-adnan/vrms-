@@ -12,13 +12,15 @@
 
     <name>Vehicle Rental Management System</name>
 
-    <properties>
-       <maven.compiler.release>17</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <junit.version>5.10.2</junit.version>
-        <mockito.version>5.11.0</mockito.version>
-    </properties>
+    <junit.version>5.10.2</junit.version>
+    <mockito.version>5.11.0</mockito.version>
+
+    <sonar.organization>vrms-team-adnan</sonar.organization>
+</properties>
 
     <dependencies>
 

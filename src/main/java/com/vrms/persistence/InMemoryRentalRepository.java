@@ -15,9 +15,25 @@ public class InMemoryRentalRepository implements RentalRepository {
 
     /**
      * Adds a new rental to the list.
+     * @param   rental   the rental to save
      */
     @Override
     public void save(Rental rental) {
         rentals.add(rental);
+    }
+    @Override
+    /**
+     * 
+     * find the rental by rentId from list
+     * @param rentId
+     * @return the rental, or null if it is not found
+     */
+    public Rental findById(String rentId) {
+        for (Rental rental : rentals) {
+            if (rental.getId().equals(rentId))
+            {
+            return rental;
+            }}
+        return null;
     }
 }
