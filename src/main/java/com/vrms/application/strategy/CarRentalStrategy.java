@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 /**
  * Calculates the normal rental cost and late fee
  */
-public class carRentalStrategy implements RentalPricingStrategy{
+public class CarRentalStrategy implements RentalPricingStrategy{
 	private final double dailycost;
 	private final double dailylatecost;
 	/**
@@ -15,7 +15,7 @@ public class carRentalStrategy implements RentalPricingStrategy{
 	 * @param dailycost the cost for one rental day
 	 * @param dailylatecost the fee for one late day
 	 */
-	public carRentalStrategy(double dailycost,double dailylatecost) {
+	public CarRentalStrategy(double dailycost,double dailylatecost) {
 		this.dailycost=dailycost;
 		this.dailylatecost=dailylatecost;
 	}

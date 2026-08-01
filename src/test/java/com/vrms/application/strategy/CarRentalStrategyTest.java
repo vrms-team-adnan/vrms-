@@ -9,11 +9,11 @@ import com.vrms.domain.Rental;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
 class CarRentalStrategyTest {
-	private carRentalStrategy strategy;
+	private CarRentalStrategy strategy;
 	private Rental rental;
 	@BeforeEach
     void setUp() {
-		strategy=new carRentalStrategy(50,20);
+		strategy=new CarRentalStrategy(50,20);
 		Vehicle vehicle =new Car("1","kya",VehicleStatus.RENTED);
 		rental=new Rental("1ren",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10));
 	}

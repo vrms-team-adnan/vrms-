@@ -15,7 +15,7 @@ public abstract class Vehicle {
      * @param   name     the vehicle's name
      * @param   status   the vehicle's initial status
      */
-    public Vehicle(String id, String name, VehicleStatus status) {
+    protected  Vehicle(String id, String name, VehicleStatus status) {
         this.id = id;
         this.name = name;
         this.status = status;
