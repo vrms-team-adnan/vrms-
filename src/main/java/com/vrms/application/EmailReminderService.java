@@ -12,6 +12,7 @@ public class EmailReminderService implements NotificationObserver {
      * Creates a new EmailReminderService.
      */
     public EmailReminderService() {
+        // No initialization needed.
     }
     /**
      * {@inheritDoc}

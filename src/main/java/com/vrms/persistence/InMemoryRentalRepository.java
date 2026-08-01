@@ -17,6 +17,7 @@ public class InMemoryRentalRepository implements RentalRepository {
      * Creates a new InMemoryRentalRepository.
      */
     public InMemoryRentalRepository() {
+       // No initialization needed. 
     }
 
     /**

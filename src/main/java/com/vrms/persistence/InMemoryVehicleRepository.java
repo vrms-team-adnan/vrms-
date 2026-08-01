@@ -17,6 +17,7 @@ public class InMemoryVehicleRepository implements VehicleRepository {
      * Creates a new InMemoryVehicleRepository.
      */
     public InMemoryVehicleRepository() {
+        // No initialization needed.
     }
 
     /**
