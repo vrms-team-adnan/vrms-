@@ -1,6 +1,6 @@
 # ===== Maven =====
 target/
-
+javadoc-output/
 # ===== Java =====
 *.class
 *.jar

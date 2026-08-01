@@ -8,7 +8,11 @@ import com.vrms.domain.Rental;
  * an actual email service.
  */
 public class EmailReminderService implements NotificationObserver {
-
+/**
+     * Creates a new EmailReminderService.
+     */
+    public EmailReminderService() {
+    }
     /**
      * {@inheritDoc}
      */
