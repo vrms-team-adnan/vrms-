@@ -40,18 +40,19 @@ public class RentalService {
 
 
 	/**
-     * Rents a vehicle for the given period. Validates the dates and the
-     * vehicle's availability, then creates a rental record and marks the
-     * vehicle as rented.
-     *
-     * @param   rentId    the unique identifier of the rental
-     * @param   vehicle   the vehicle to rent
-     * @param   startD    the rental start date
-     * @param   endD      the rental end date
-     * @throws  RentalException   if a date is null, the start date is
-     *          after the end date, the duration exceeds 30 days, or the
-     *          vehicle is not available
-     */
+ * Rents a vehicle for the given period. Validates the dates and the
+ * vehicle's availability, then creates a rental record and marks the
+ * vehicle as rented.
+ *
+ * @param   rentId    the unique identifier of the rental
+ * @param   vehicle   the vehicle to rent
+ * @param   startD    the rental start date
+ * @param   endD      the rental end date
+ * @param   customer  the customer requesting the rental
+ * @throws  RentalException   if a date is null, the start date is
+ *          after the end date, the duration exceeds 30 days, or the
+ *          vehicle is not available
+ */
     public void rentVehicle(String rentId, Vehicle vehicle, LocalDate startD, LocalDate endD,Customer customer) {
         if (startD == null || endD == null) {
             throw new RentalException("Cannot rent vehicle: Date is null");

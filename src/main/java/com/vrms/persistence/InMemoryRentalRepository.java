@@ -14,26 +14,34 @@ public class InMemoryRentalRepository implements RentalRepository {
     private final List<Rental> rentals = new ArrayList<>();
 
     /**
+     * Creates a new InMemoryRentalRepository.
+     */
+    public InMemoryRentalRepository() {
+    }
+
+    /**
      * Adds a new rental to the list.
+     *
      * @param   rental   the rental to save
      */
     @Override
     public void save(Rental rental) {
         rentals.add(rental);
     }
-    @Override
+
     /**
-     * 
-     * find the rental by rentId from list
-     * @param rentId
-     * @return the rental, or null if it is not found
+     * Find the rental by rentId from the list.
+     *
+     * @param   rentId   the id of the rental to search for
+     * @return  the rental, or null if it is not found
      */
+    @Override
     public Rental findById(String rentId) {
         for (Rental rental : rentals) {
-            if (rental.getId().equals(rentId))
-            {
-            return rental;
-            }}
+            if (rental.getId().equals(rentId)) {
+                return rental;
+            }
+        }
         return null;
     }
 }

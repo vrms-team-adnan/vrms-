@@ -13,6 +13,12 @@ public class RentalSubject {
     private final List<NotificationObserver> observers = new ArrayList<>();
 
     /**
+     * Creates a new RentalSubject.
+     */
+    public RentalSubject() {
+    }
+
+    /**
      * Registers a new observer to be notified about rental events.
      *
      * @param   observer   the observer to register
@@ -30,10 +36,5 @@ public class RentalSubject {
         for (NotificationObserver observer : observers) {
             observer.notify(rental);
         }
-
-        
     }
-
-
-
 }

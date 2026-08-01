@@ -14,6 +14,12 @@ public class InMemoryManagerRepository implements ManagerRepository {
     private final Map<String, Manager> managersByUsername = new HashMap<>();
 
     /**
+     * Creates a new InMemoryManagerRepository.
+     */
+    public InMemoryManagerRepository() {
+    }
+
+    /**
      * Saves a manager in the repository.
      *
      * @param   manager   the manager to save

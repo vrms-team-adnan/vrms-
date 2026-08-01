@@ -14,6 +14,12 @@ public class InMemoryVehicleRepository implements VehicleRepository {
     private final Map<String, Vehicle> vehicles = new HashMap<>();
 
     /**
+     * Creates a new InMemoryVehicleRepository.
+     */
+    public InMemoryVehicleRepository() {
+    }
+
+    /**
      * Saves a vehicle in the repository.
      *
      * @param   vehicle   the vehicle to save
@@ -29,6 +35,4 @@ public class InMemoryVehicleRepository implements VehicleRepository {
     public List<Vehicle> findAll() {
         return new ArrayList<>(vehicles.values());
     }
-
-	
 }
