@@ -21,6 +21,6 @@ public class Van extends Vehicle {
      */
     @Override
     public void validateForRental(Customer customer) {
-
+// No special rental restrictions apply to vans.
     }
 }
