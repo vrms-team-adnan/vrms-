@@ -9,7 +9,7 @@ import com.vrms.domain.RentelStatus;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
 import com.vrms.persistence.RentalRepository;
-import com.vrms.application.strategy.carRentalStrategy;
+import com.vrms.application.strategy.CarRentalStrategy;
 import com.vrms.application.strategy.RentalPricingStrategy;
 import com.vrms.domain.Customer;
 /**
@@ -25,7 +25,7 @@ public class RentalService {
      * @param   rentalRepository   the repository used to save rentals
      */
     public RentalService(RentalRepository rentalRepository) {
-        this(rentalRepository,new carRentalStrategy(50, 20));
+        this(rentalRepository,new CarRentalStrategy(50, 20));
     }
     /**
      * Creates a rental service with a pricing strategy

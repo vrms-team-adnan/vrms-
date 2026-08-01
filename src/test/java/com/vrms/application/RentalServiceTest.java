@@ -14,7 +14,7 @@ import com.vrms.domain.Customer;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
-import com.vrms.application.strategy.carRentalStrategy;
+import com.vrms.application.strategy.CarRentalStrategy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 // Test 1 and 2 for US2.1 Test 3 for US2.2
 
@@ -27,7 +27,7 @@ private Customer customer;
  @BeforeEach
  void setUp(){
      rentalRepository = new InMemoryRentalRepository();
-     rentalService = new RentalService(rentalRepository, new carRentalStrategy(50, 20));
+     rentalService = new RentalService(rentalRepository, new CarRentalStrategy(50, 20));
      customer = new Customer("9", "Test Customer", 25, false);
  }
  
