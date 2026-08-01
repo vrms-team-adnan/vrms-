@@ -17,6 +17,7 @@ public class InMemoryManagerRepository implements ManagerRepository {
      * Creates a new InMemoryManagerRepository.
      */
     public InMemoryManagerRepository() {
+        // No initialization needed.
     }
 
     /**

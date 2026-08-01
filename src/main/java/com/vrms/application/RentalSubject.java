@@ -16,6 +16,7 @@ public class RentalSubject {
      * Creates a new RentalSubject.
      */
     public RentalSubject() {
+        // No initialization needed.
     }
 
     /**
