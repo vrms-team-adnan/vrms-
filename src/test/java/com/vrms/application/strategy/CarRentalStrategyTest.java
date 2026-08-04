@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.vrms.domain.Car;
+import com.vrms.domain.Customer;
 import com.vrms.domain.Rental;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
@@ -12,11 +13,12 @@ class CarRentalStrategyTest {
 	private CarRentalStrategy strategy;
 	private Rental rental;
 	@BeforeEach
-    void setUp() {
-		strategy=new CarRentalStrategy(50,20);
-		Vehicle vehicle =new Car("1","kya",VehicleStatus.RENTED);
-		rental=new Rental("1ren",vehicle,LocalDate.of(2026, 10, 1),LocalDate.of(2026, 10, 10));
-	}
+void setUp() {
+    strategy = new CarRentalStrategy(50, 20);
+    Vehicle vehicle = new Car("1", "kya", VehicleStatus.RENTED);
+    Customer customer = new Customer("c1", "Test Customer", 25, false);
+    rental = new Rental("1ren", vehicle, customer, LocalDate.of(2026, 10, 1), LocalDate.of(2026, 10, 10));
+}
 
 	@Test
 	void calcRentcost() {

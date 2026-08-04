@@ -71,7 +71,7 @@ public class RentalService {
             throw new RentalException("Cannot rent vehicle: vehicle is not available");
         }
        vehicle.validateForRental(customer);
-        Rental rental = new Rental(rentId, vehicle, startD, endD);
+        Rental rental = new Rental(rentId, vehicle, customer,startD, endD);
         rentalRepository.save(rental);
 
         vehicle.setStatus(VehicleStatus.RENTED);

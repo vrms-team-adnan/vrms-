@@ -1,5 +1,6 @@
 package com.vrms.application;
 import com.vrms.domain.Car;
+import com.vrms.domain.Customer;
 import com.vrms.domain.Rental;
 import com.vrms.domain.Vehicle;
 import com.vrms.domain.VehicleStatus;
@@ -21,7 +22,9 @@ class RentalSubjectTest {
 
         
         Vehicle vehicle = new Car("1", "Toyota", VehicleStatus.RENTED);
-        Rental rental = new Rental("100", vehicle, LocalDate.now(), LocalDate.now().plusDays(3));
+
+        Customer customer = new Customer("c1", "Test Customer", 25, false);
+Rental rental = new Rental("100", vehicle, customer, LocalDate.now(), LocalDate.now().plusDays(3));
         subject.notifyObservers(rental);
 
        
