@@ -45,4 +45,18 @@ public class InMemoryRentalRepository implements RentalRepository {
         }
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Rental> findByCustomerId(String customerId) {
+        List<Rental> customerRentals = new ArrayList<>();
+        for (Rental rental : rentals) {
+            if (rental.getCustomer().getId().equals(customerId)) {
+                customerRentals.add(rental);
+            }
+        }
+        return customerRentals;
+    }
 }
