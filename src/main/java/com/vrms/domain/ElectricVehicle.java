@@ -24,6 +24,15 @@ public class ElectricVehicle extends Vehicle {
     }
 
     /**
+     * Returns the current battery level of this vehicle.
+     *
+     * @return  the battery level (0-100)
+     */
+    public int getBatteryLevel() {
+        return batteryLevel;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

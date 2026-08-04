@@ -1,7 +1,7 @@
 package com.vrms.application;
 
 import com.vrms.domain.Car;
-
+import com.vrms.domain.Customer;
 // This test calls EmailReminderService directly (no mock) to make sure
 // JaCoCo actually covers its real logic, since RentalSubjectTest only
 // tests it through a mocked NotificationObserver.
@@ -18,11 +18,12 @@ class EmailReminderServiceTest {
 
     @Test
     void notifyShouldNotThrowException() {
-        Vehicle vehicle=new Car("2", "Seat", VehicleStatus.AVAILABLE);
-        Rental rental = new Rental("4", vehicle, LocalDate.now(), LocalDate.now().plusDays(3));
+        Vehicle vehicle = new Car("2", "Seat", VehicleStatus.AVAILABLE);
+        Customer customer = new Customer("c1", "Test Customer", 25, false);
+        Rental rental = new Rental("4", vehicle, customer, LocalDate.now(), LocalDate.now().plusDays(3));
         EmailReminderService service = new EmailReminderService();
         assertDoesNotThrow(() -> {
-    service.notify(rental);
-});
+            service.notify(rental);
+        });
     }
 }

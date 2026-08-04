@@ -24,13 +24,21 @@ public class Truck extends Vehicle {
     }
 
     /**
+     * Returns whether this truck requires a special license to rent.
+     *
+     * @return  true if a special license is required
+     */
+    public boolean requiresSpecialLicense() {
+        return requiresSpecialLicense;
+    }
+
+    /**
      * {@inheritDoc}
      */
-    
     @Override
-public void validateForRental(Customer customer) {
-    if (requiresSpecialLicense && !customer.hasSpecialLicense()) {
-        throw new RentalException("This truck requires a special license");
+    public void validateForRental(Customer customer) {
+        if (requiresSpecialLicense && !customer.hasSpecialLicense()) {
+            throw new RentalException("This truck requires a special license");
+        }
     }
-}
 }

@@ -23,7 +23,18 @@
 </properties>
 
     <dependencies>
-
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-controls</artifactId>
+    <version>21.0.2</version>
+    <classifier>win</classifier>
+</dependency>
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-fxml</artifactId>
+    <version>21.0.2</version>
+    <classifier>win</classifier>
+</dependency>
         <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -50,7 +61,14 @@
 
     <build>
         <plugins>
-
+<plugin>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-maven-plugin</artifactId>
+    <version>0.0.8</version>
+    <configuration>
+        <mainClass>com.vrms.presentation.gui.fx.VrmsFxApp</mainClass>
+    </configuration>
+</plugin>
             <!-- Surefire: تشغيل JUnit 5 tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
