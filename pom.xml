@@ -96,6 +96,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>com/vrms/presentation/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
 
         </plugins>
